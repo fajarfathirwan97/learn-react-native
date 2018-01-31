@@ -13,6 +13,7 @@ export default class RoundTextInput extends Component {
       placeholder : props.placeholder,
       placeholderTextColor: props.placeholderTextColor,
       onChangeText: props.onChangeText,
+      secureTextEntry:props.secureTextEntry
     }
   }
 
@@ -23,6 +24,7 @@ export default class RoundTextInput extends Component {
         underlineColorAndroid='transparent'
         textAlign='center'
         onChangeText={this.state.onChangeText}
+        secureTextEntry={this.state.secureTextEntry}
         placeholderTextColor={this.state.placeholderTextColor}
         style={this.state.style.textInput} />
     )

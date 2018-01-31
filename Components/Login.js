@@ -50,8 +50,8 @@ export default class Login extends Component {
     apiService = new APIService('https://reqres.in/','api/login',this.state.form,{'Content-Type':'application/json'},'POST');
     apiService.fetch().then((res)=>{
       this.setState({ modalVisibility: false });   
-      console.log(res.ok)      
-      // Alert.alert('Alert',JSON.parse(res._bodyText).error)
+      if(!res.ok)
+        Alert.alert('Alert',JSON.parse(res._bodyText).error)
     }).catch((err) => {
       this.setState({ modalVisibility: false });
       console.log(err);
@@ -63,7 +63,7 @@ export default class Login extends Component {
       <LinearGradient 
         start={{ x: 0.0, y: 0.0 }} end={{ x: 0.0, y: 0.0 }}
         locations={[0, 1]}
-        colors={['#495263', '#333C4D']}
+        colors={['#333C4D', '#333C4D']}
         style={this.state.style.main}>
         <CustomModal modalVisibility={this.state.modalVisibility} />
         <View style={this.state.style.logo}>
@@ -78,6 +78,7 @@ export default class Login extends Component {
             placeholderTextColor='#D8D8D8'/>
           <RoundTextInput 
             placeholder={getKey('form.password')} 
+            secureTextEntry={true}
             onChangeText={(text, key) => this.setValue(text, 'password')}
             placeholderTextColor='#D8D8D8'/>
           <RoundButton onPress={() => this.login()} text={getKey('form.login')}/>

@@ -2,5 +2,8 @@ import { AppRegistry } from 'react-native';
 import App from './App';
 // import Calculator from './Components/Calculator';
 import Login from './Components/Login';
+import Test from './Components/Test';
+import HideNav from './Components/HideNav';
+import ShopingHome from './Components/ShopingHome';
 
-AppRegistry.registerComponent('test1', () => Login);
+AppRegistry.registerComponent('test1', () => HideNav);

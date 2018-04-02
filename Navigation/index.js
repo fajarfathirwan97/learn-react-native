@@ -24,7 +24,6 @@ let Navigation = DrawerNavigator(
 
 export default class index extends Component {
   render() {
-    // console.log(redux(),'sadsa')
     return (
       <Provider store={redux()}>
         <Navigation />

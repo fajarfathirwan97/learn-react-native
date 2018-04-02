@@ -1,5 +1,3 @@
-import Login from "localSaga";
-
 import { createActions, createReducer } from "reduxsauce";
 
 // INITAL STATE
@@ -14,7 +12,8 @@ const INITIAL_STATE = {
 }
 // ACTION
 const { Types, Creators } = createActions({
-  loginRequest: ['form'],
+  request: [],
+  setForm: ['form']
 })
 
 export const LoginTypes = Types
@@ -27,8 +26,19 @@ const request = (state, action) => {
   }
 }
 
+const setForm = (state, action) => {
+  return state = {
+    ...state,
+    form: {
+      ...state.form,
+      ...action.form
+    }
+  }
+}
+
 export const HANDLERS = {
-  [Types.LOGIN_REQUEST]: request,
+  [Types.REQUEST]: request,
+  [Types.SET_FORM]: setForm,
 }
 
 export const reducer = createReducer(INITIAL_STATE, HANDLERS)

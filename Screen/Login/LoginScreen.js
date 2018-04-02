@@ -23,13 +23,14 @@ import {
 import LoginActions from "../../Redux/Login";
 
 class LoginScreen extends Component {
-  componentWillMount() {
-    this.props.loginRequest();
-  }
-  componentDidUpdate() {
-    console.log('asd')
+  constructor(props) {
+    super(props)
+    this.form = {
+
+    }
   }
   render() {
+    const { setForm, loginRequest } = this.props
     return (
       <ImageBackground
         resizeMode='cover'
@@ -44,12 +45,22 @@ class LoginScreen extends Component {
             <Item>
               <FontAwsome active color='white' size={20} name='user' />
               <Input
+                onSubmitEditing={() => {
+                  this.refs.password._root.focus()
+                }}
+                blurOnSubmit={true}
+                returnKeyType="next"
+                style={{ color: 'white' }}
+                onChangeText={(value) => { setForm({ username: value }) }}
                 placeholderTextColor='white'
                 placeholder='Username' />
             </Item>
             <Item>
               <FontAwsome active color='white' size={20} name='lock' />
               <Input
+                style={{ color: 'white' }}
+                ref='password'
+                onChangeText={(value) => { setForm({ password: value }) }}
                 secureTextEntry={true}
                 placeholderTextColor='white'
                 placeholder='Password' />
@@ -72,7 +83,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    loginRequest: () => dispatch(LoginActions.loginRequest())
+    loginRequest: () => dispatch(LoginActions.loginRequest()),
+    setForm: (form) => dispatch(LoginActions.setForm(form))
   }
 }
 

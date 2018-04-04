@@ -1,36 +1,54 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import {
-  View,
   ImageBackground,
   Text,
-  Dimensions,
-  TouchableOpacity,
-} from "react-native";
-import FontAwsome from "react-native-vector-icons/FontAwesome";
+} from 'react-native'
 import {
-  Container,
-  Header,
-  List,
-  ListItem,
-  Label,
   Content,
-  Input,
   Form,
-  Item,
   Button
-} from "native-base";
-import LoginActions from "../../Redux/Login";
+} from 'native-base'
+import TextInputWithLogo from '../../Components/TextInputWithLogo'
+import LoginActions from '../../Redux/Login'
+import { isTrue } from '../../CustomLib/Helpers'
 
 class LoginScreen extends Component {
   constructor(props) {
     super(props)
-    this.form = {
+    this.textInput = {
 
     }
   }
+  checkValidation() {
+    let validate = []
+    let message = []
+    let textInput = this.textInput
+    for (let textInputKey in textInput) {
+      let result = textInput[textInputKey].validate()
+      validate.push(result.status)
+      if (!result.status)
+        message.push(result.message)
+    }
+    return {
+      status: validate.every(isTrue),
+      message: message[0]
+    }
+  }
+  post() {
+    let checkValidation = this.checkValidation()
+    if (!checkValidation.status)
+      this.props.post(this.props.login)
+    else
+      alert(checkValidation.message)
+  }
+
+  handleOnSubmitEditing(name) {
+    this.textInput[name].focus()
+  }
+
   render() {
-    const { setForm, loginRequest } = this.props
+    const { setForm, login } = this.props
     return (
       <ImageBackground
         resizeMode='cover'
@@ -42,36 +60,70 @@ class LoginScreen extends Component {
           padding: 10,
         }}>
           <Form style={{ justifyContent: 'space-around' }}>
-            <Item>
-              <FontAwsome active color='white' size={20} name='user' />
-              <Input
-                onSubmitEditing={() => {
-                  this.refs.password._root.focus()
-                }}
-                blurOnSubmit={true}
-                returnKeyType="next"
-                style={{ color: 'white' }}
-                onChangeText={(value) => { setForm({ username: value }) }}
-                placeholderTextColor='white'
-                placeholder='Username' />
-            </Item>
-            <Item>
-              <FontAwsome active color='white' size={20} name='lock' />
-              <Input
-                style={{ color: 'white' }}
-                ref='password'
-                onChangeText={(value) => { setForm({ password: value }) }}
-                secureTextEntry={true}
-                placeholderTextColor='white'
-                placeholder='Password' />
-            </Item>
-            <Button full style={{ marginTop: 20, marginLeft: 10 }}>
+            <TextInputWithLogo
+              // onSubmitEditing={() => {
+              //   this.handleOnSubmitEditing('password')
+              // }}
+              iconColor='white'
+              iconType='FontAwesome'
+              iconName='lock'
+              validation='required'
+              ref={(ref) => { this.textInput.required = ref }}
+              blurOnSubmit={true}
+              returnKeyType='next'
+              style={{ color: 'white' }}
+              onChangeText={(value) => { setForm({ username: value }) }}
+              placeholderTextColor='white'
+              placeholder={'required'} />
+
+            <TextInputWithLogo
+              // onSubmitEditing={() => {
+              //   this.handleOnSubmitEditing('password')
+              // }}
+              validation='number'
+              ref={(ref) => { this.textInput.number = ref }}
+              blurOnSubmit={true}
+              returnKeyType='next'
+              style={{ color: 'white' }}
+              onChangeText={(value) => { setForm({ username: value }) }}
+              placeholderTextColor='white'
+              placeholder={'number'} />
+
+            {/* <TextInputWithLogo
+              onSubmitEditing={() => {
+                this.handleOnSubmitEditing('password')
+              }}
+              ref={(ref) => { this.textInput.username = ref }}              
+              blurOnSubmit={true}
+              returnKeyType='next'
+              style={{ color: 'white' }}
+              onChangeText={(value) => { setForm({ username: value }) }}
+              placeholderTextColor='white'
+              placeholder={trans('en.form.username')} />
+
+            <TextInputWithLogo
+              ref={(ref) => { this.textInput.password = ref }}
+              validation='required'
+              typeFont='FontAwesome'
+              fontName='lock'
+              fontColor='white'
+              secureTextEntry={true}
+              blurOnSubmit={true}
+              returnKeyType='next'
+              style={{ color: 'white' }}
+              onChangeText={(value) => { setForm({ username: value }) }}
+              placeholderTextColor='white'
+              placeholder={trans('en.form.password')} /> */}
+
+            <Button full
+              onPress={() => { this.post(login.form) }}
+              style={{ marginTop: 20, marginLeft: 10 }}>
               <Text style={{ color: 'white', fontWeight: 'bold' }}>Login</Text>
             </Button>
           </Form>
         </Content>
       </ImageBackground>
-    );
+    )
   }
 }
 
@@ -83,7 +135,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    loginRequest: () => dispatch(LoginActions.loginRequest()),
+    post: (form) => dispatch(LoginActions.post(form)),
     setForm: (form) => dispatch(LoginActions.setForm(form))
   }
 }

@@ -1,7 +1,7 @@
 /**
  * @providesModule themes
  */
-import Colors from "./Colors";
+import Colors from './Colors'
 
 export {
   Colors

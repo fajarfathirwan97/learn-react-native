@@ -1,10 +1,9 @@
-import React, { Component } from "react";
+import React, { Component } from 'react'
 import {
-  View,
   Text,
   TouchableOpacity,
-} from "react-native";
-import { Container, Header, List, ListItem, Content } from "native-base";
+} from 'react-native'
+import { Container, List, ListItem, Content } from 'native-base'
 
 export default class HomeScreen extends Component {
   render() {
@@ -20,6 +19,6 @@ export default class HomeScreen extends Component {
           </List>
         </Content>
       </Container>
-    );
+    )
   }
 }

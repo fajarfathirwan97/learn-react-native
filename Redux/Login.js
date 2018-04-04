@@ -13,7 +13,8 @@ const INITIAL_STATE = {
 // ACTION
 const { Types, Creators } = createActions({
   request: [],
-  setForm: ['form']
+  setForm: ['form'],
+  post: ['form']
 })
 
 export const LoginTypes = Types
@@ -25,7 +26,6 @@ const request = (state, action) => {
     fetching: true
   }
 }
-
 const setForm = (state, action) => {
   return state = {
     ...state,
@@ -39,6 +39,7 @@ const setForm = (state, action) => {
 export const HANDLERS = {
   [Types.REQUEST]: request,
   [Types.SET_FORM]: setForm,
+  [Types.POST]: request,
 }
 
 export const reducer = createReducer(INITIAL_STATE, HANDLERS)

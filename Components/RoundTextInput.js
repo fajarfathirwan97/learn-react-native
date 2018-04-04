@@ -1,7 +1,7 @@
-import React, { Component } from "react";
+import React, { Component } from 'react'
 import {
   TextInput,
-} from 'react-native';
+} from 'react-native'
 
 export default class RoundTextInput extends Component {
   constructor(props){

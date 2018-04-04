@@ -1,18 +1,20 @@
-export default class APIService {
-  constructor(url,endPoint,data,header,method){
-    this.url = url
-    this.endPoint = endPoint
-    this.data = data
-    this.header = header
-    this.method = method
-  }
-  fetch = () =>{
-    return fetch(this.url+this.endPoint,{
-      method: this.method,
-      headers : this.header,
-      body : JSON.stringify(this.data)
-    }).catch((err)=>{
-      console.log(err,'error');
+'use strict';
+
+import apisauce from "apisauce";
+
+const create = () => {
+    const api = apisauce.create({
+        baseURL: 'http://eform-api.stagingapps.net/api',
+        timeout: 1000,
+        headers: { client_key: '$2y$10$OoDAS6saH1b3D/nZJ4DXKuOTqVumFTACUZDFkZfepS1h15jDNxdzK' }
     });
-  }
+    const authLogin = (form) => api.post('v1/user/login', form, {});
+
+    return {
+        authLogin
+    };
+
+};
+export default {
+    create
 }

@@ -55,11 +55,13 @@ export default class TextInputWithLogo extends React.Component {
             onChangeText={(value) => {
               this.setState({ value })
               let validate = this.validate(value)
-              if (!validate.error)
+              if (validate.error)
                 onChangeText(value)
+              else
+                this.focus()
             }}
             secureTextEntry={secureTextEntry}
-            placeholderTextColor={placeholderTextColor}
+            placeholderTextColor={!this.state.error ? 'red' : placeholderTextColor}
             placeholder={placeholder} />
         </Item>
         {

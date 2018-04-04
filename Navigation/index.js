@@ -1,9 +1,11 @@
-import React, { Component } from "react";
-import { DrawerNavigator, StackNavigator } from "react-navigation";
-import { Home, Login } from "../Screen/";
-import redux from "../Redux";
-import rootSaga from "../Saga";
-import { Provider } from "react-redux";
+import React, { Component } from 'react'
+import { DrawerNavigator } from 'react-navigation'
+import { Home, Login } from '../Screen/'
+import redux from '../Redux'
+import { Provider } from 'react-redux'
+import { Text, View } from 'native-base'
+import { Metrics } from '../Themes'
+import Toast from '../Components/Toast'
 
 let Navigation = DrawerNavigator(
   {
@@ -20,13 +22,16 @@ let Navigation = DrawerNavigator(
   {
     initialRouteName: 'Login',
   }
-);
+)
 
 export default class index extends Component {
   render() {
     return (
       <Provider store={redux()}>
-        <Navigation />
+        <View style={{ flex: 1 }}>
+          <Navigation />
+          <Toast/>
+        </View>
       </Provider>
     )
   }

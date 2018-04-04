@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import {
   ImageBackground,
   Text,
+  ActivityIndicator
 } from 'react-native'
 import {
   Content,
@@ -12,6 +13,8 @@ import {
 import TextInputWithLogo from '../../Components/TextInputWithLogo'
 import LoginActions from '../../Redux/Login'
 import { isTrue } from '../../CustomLib/Helpers'
+import { trans } from '../../Lang'
+import { Colors } from '../../Themes'
 
 class LoginScreen extends Component {
   constructor(props) {
@@ -22,28 +25,27 @@ class LoginScreen extends Component {
   }
   checkValidation() {
     let validate = []
-    let message = []
+    let focus = ''
     let textInput = this.textInput
     for (let textInputKey in textInput) {
       let result = textInput[textInputKey].validate()
-      validate.push(result.status)
-      if (!result.status)
-        message.push(result.message)
+      validate.push(result.error)
+      if (!result.error && result.message && !focus)
+        focus = textInputKey
     }
+    if (focus)
+      this.focusTo(focus)
     return {
       status: validate.every(isTrue),
-      message: message[0]
     }
   }
-  post() {
+  post(form) {
     let checkValidation = this.checkValidation()
-    if (!checkValidation.status)
-      this.props.post(this.props.login)
-    else
-      alert(checkValidation.message)
+    if (checkValidation.status)
+      this.props.post(form)
   }
 
-  handleOnSubmitEditing(name) {
+  focusTo(name) {
     this.textInput[name].focus()
   }
 
@@ -61,39 +63,14 @@ class LoginScreen extends Component {
         }}>
           <Form style={{ justifyContent: 'space-around' }}>
             <TextInputWithLogo
-              // onSubmitEditing={() => {
-              //   this.handleOnSubmitEditing('password')
-              // }}
+              onSubmitEditing={() => {
+                this.focusTo('password')
+              }}
               iconColor='white'
               iconType='FontAwesome'
-              iconName='lock'
+              iconName='user'
               validation='required'
-              ref={(ref) => { this.textInput.required = ref }}
-              blurOnSubmit={true}
-              returnKeyType='next'
-              style={{ color: 'white' }}
-              onChangeText={(value) => { setForm({ username: value }) }}
-              placeholderTextColor='white'
-              placeholder={'required'} />
-
-            <TextInputWithLogo
-              // onSubmitEditing={() => {
-              //   this.handleOnSubmitEditing('password')
-              // }}
-              validation='number'
-              ref={(ref) => { this.textInput.number = ref }}
-              blurOnSubmit={true}
-              returnKeyType='next'
-              style={{ color: 'white' }}
-              onChangeText={(value) => { setForm({ username: value }) }}
-              placeholderTextColor='white'
-              placeholder={'number'} />
-
-            {/* <TextInputWithLogo
-              onSubmitEditing={() => {
-                this.handleOnSubmitEditing('password')
-              }}
-              ref={(ref) => { this.textInput.username = ref }}              
+              ref={(ref) => { this.textInput.username = ref }}
               blurOnSubmit={true}
               returnKeyType='next'
               style={{ color: 'white' }}
@@ -102,23 +79,31 @@ class LoginScreen extends Component {
               placeholder={trans('en.form.username')} />
 
             <TextInputWithLogo
-              ref={(ref) => { this.textInput.password = ref }}
+              onSubmitEditing={() => {
+                this.post(login.form)
+              }}
+              iconColor='white'
+              iconType='FontAwesome'
+              iconName='lock'
               validation='required'
-              typeFont='FontAwesome'
-              fontName='lock'
-              fontColor='white'
-              secureTextEntry={true}
+              ref={(ref) => { this.textInput.password = ref }}
               blurOnSubmit={true}
-              returnKeyType='next'
+              returnKeyType='done'
               style={{ color: 'white' }}
-              onChangeText={(value) => { setForm({ username: value }) }}
+              onChangeText={(value) => { setForm({ password: value }) }}
               placeholderTextColor='white'
-              placeholder={trans('en.form.password')} /> */}
+              placeholder={trans('en.form.password')} />
 
             <Button full
               onPress={() => { this.post(login.form) }}
               style={{ marginTop: 20, marginLeft: 10 }}>
-              <Text style={{ color: 'white', fontWeight: 'bold' }}>Login</Text>
+              {
+                login.fetching ?
+                  <ActivityIndicator size='large' color={Colors.white} />
+                  : <Text style={{ color: 'white', fontWeight: 'bold' }}>Login</Text>
+
+              }
+
             </Button>
           </Form>
         </Content>

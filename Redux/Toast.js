@@ -1,4 +1,5 @@
 import { createActions, createReducer } from 'reduxsauce'
+import { trans } from '../Lang'
 
 // INITAL STATE
 const INITIAL_STATE = {
@@ -15,10 +16,35 @@ export const ToastTypes = Types
 export default Creators
 
 const show = (state, action) => {
+  let { message } = action
+  switch (message) {
+  case 'TIMEOUT_ERROR': {
+    message = trans('en.http.timeout')
+    break
+  }
+  case 'CLIENT_ERROR': {
+    message = trans('en.http.client')
+    break
+  }
+  case 'SERVER_ERROR': {
+    message = trans('en.http.server')
+    break
+  }
+  case 'CONNECTION_ERROR': {
+    message = trans('en.http.connection')
+    break
+  }
+  case 'NETWORK_ERROR': {
+    message = trans('en.http.network')
+    break
+  }
+  default:
+    break
+  }
   return state = {
     ...state,
     show: true,
-    message: action.message
+    message: message
 
   }
 }

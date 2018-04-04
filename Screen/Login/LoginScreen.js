@@ -41,7 +41,7 @@ class LoginScreen extends Component {
   }
   post(form) {
     let checkValidation = this.checkValidation()
-    if (checkValidation.status)
+    if (checkValidation.status && !this.props.login.fetching)
       this.props.post(form)
   }
 
@@ -71,7 +71,7 @@ class LoginScreen extends Component {
               iconName='user'
               validation='required'
               ref={(ref) => { this.textInput.username = ref }}
-              blurOnSubmit={true}
+              blurOnSubmit
               returnKeyType='next'
               style={{ color: 'white' }}
               onChangeText={(value) => { setForm({ username: value }) }}
@@ -87,7 +87,8 @@ class LoginScreen extends Component {
               iconName='lock'
               validation='required'
               ref={(ref) => { this.textInput.password = ref }}
-              blurOnSubmit={true}
+              blurOnSubmit
+              secureTextEntry
               returnKeyType='done'
               style={{ color: 'white' }}
               onChangeText={(value) => { setForm({ password: value }) }}

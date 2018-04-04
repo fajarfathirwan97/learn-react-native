@@ -16,15 +16,23 @@ export function* login(api, action) {
     default:
       break
     }
+    console.log(response)
     if (response.ok)
       yield put(LoginActions.success(response.data.data))
     else {
-      yield put(LoginActions.failure(response.data.meta))
-      yield put(ToastActions.show(response.data.meta.message))
+      if (response.data) {
+        yield put(ToastActions.show(response.data.meta.message))
+        yield put(LoginActions.failure(response.data.meta))
+      } else {
+        yield put(ToastActions.show(response.problem))
+        yield put(LoginActions.failure())
+      }
     }
 
 
   } catch (error) {
+    yield put(ToastActions.show('UNKNOWN ERROR'))    
+    yield put(LoginActions.failure())
     console.log(error)
   }
 }

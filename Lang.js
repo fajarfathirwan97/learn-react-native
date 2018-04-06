@@ -9,7 +9,12 @@ export var trans = (key) => {
         login: 'Log In'
       },
       http: {
-        fetch: 'Fetching Data Please Wait'
+        fetch: 'Fetching Data Please Wait',
+        client: 'Something Went Wrong',
+        server: 'Server Error',
+        timeout: 'Timeout Error',
+        network: 'Network Not Availiable',
+        connection: 'No Internet Connection',
       },
       validate: {
         required: ':field Is Required',

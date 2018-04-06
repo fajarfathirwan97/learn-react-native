@@ -1,7 +1,8 @@
 import { call, put } from 'redux-saga/effects'
-
+import { NavigationActions } from 'react-navigation'
 import LoginActions from '../Redux/Login'
 import ToastActions from '../Redux/Toast'
+import *  as NavigatorHelper from '../CustomLib/NavigatorHelper'
 
 // attempts to login
 export function* login(api, action) {
@@ -11,15 +12,18 @@ export function* login(api, action) {
     switch (type) {
     case 'POST': {
       response = yield call(api.authLogin, form)
+      if (response.ok) {
+        yield put(LoginActions.success(response.data.data))
+        NavigatorHelper.navigate(NavigationActions.navigate({
+          routeName: 'Home',
+        }))
+      }
       break
     }
     default:
       break
     }
-    console.log(response)
-    if (response.ok)
-      yield put(LoginActions.success(response.data.data))
-    else {
+    if (!response.ok) {
       if (response.data) {
         yield put(ToastActions.show(response.data.meta.message))
         yield put(LoginActions.failure(response.data.meta))
@@ -31,7 +35,7 @@ export function* login(api, action) {
 
 
   } catch (error) {
-    yield put(ToastActions.show('UNKNOWN ERROR'))    
+    yield put(ToastActions.show('UNKNOWN ERROR'))
     yield put(LoginActions.failure())
     console.log(error)
   }

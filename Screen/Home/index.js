@@ -1,8 +1,8 @@
-import { StackNavigator } from "react-navigation";
+import { StackNavigator } from 'react-navigation'
 
-import { Colors } from "themes";
-import HomeScreen from "./HomeScreen";
-import Acordion from "./Acordion";
+import { Colors } from 'themes'
+import HomeScreen from './HomeScreen'
+import Acordion from './Acordion'
 
 export default StackNavigator(
   {

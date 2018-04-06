@@ -10,11 +10,13 @@ import {
   Form,
   Button
 } from 'native-base'
+import { NavigationActions } from 'react-navigation'
 import TextInputWithLogo from '../../Components/TextInputWithLogo'
 import LoginActions from '../../Redux/Login'
 import { isTrue } from '../../CustomLib/Helpers'
 import { trans } from '../../Lang'
 import { Colors } from '../../Themes'
+import * as NavigatorHelper from '../../CustomLib/NavigatorHelper'
 
 class LoginScreen extends Component {
   constructor(props) {
@@ -49,6 +51,9 @@ class LoginScreen extends Component {
     this.textInput[name].focus()
   }
 
+  componentDidMount() {
+    NavigatorHelper.navigate(NavigationActions.navigate({ routeName: 'Home' }))
+  }
   render() {
     const { setForm, login } = this.props
     return (
@@ -122,7 +127,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     post: (form) => dispatch(LoginActions.post(form)),
-    setForm: (form) => dispatch(LoginActions.setForm(form))
+    setForm: (form) => dispatch(LoginActions.setForm(form)),
   }
 }
 

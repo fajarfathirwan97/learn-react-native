@@ -2,19 +2,18 @@ package com.test1;
 
 import android.app.Application;
 
+import com.BV.LinearGradient.LinearGradientPackage;
 import com.facebook.react.ReactApplication;
-import com.oblador.vectoricons.VectorIconsPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
+import com.oblador.vectoricons.VectorIconsPackage;
+
+import org.pgsqlite.SQLitePluginPackage;
 
 import java.util.Arrays;
 import java.util.List;
-
-import com.BV.LinearGradient.LinearGradientPackage;
-import org.pgsqlite.SQLitePluginPackage;
-
 public class MainApplication extends Application implements ReactApplication {
 
   private final ReactNativeHost mReactNativeHost = new ReactNativeHost(this) {
@@ -27,7 +26,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
-          new SQLitePluginPackage(), 
+          new SQLitePluginPackage(),
           new VectorIconsPackage(),
           new LinearGradientPackage()
       );
@@ -46,7 +45,11 @@ public class MainApplication extends Application implements ReactApplication {
 
   @Override
   public void onCreate() {
-    super.onCreate();
-    SoLoader.init(this, /* native exopackage */ false);
+  super.onCreate();
+    if (BuildConfig.DEBUG) {
+      StethoWrapper.initialize(this);
+      StethoWrapper.addInterceptor();
+    }
+      SoLoader.init(this, /* native exopackage */ false);
   }
 }

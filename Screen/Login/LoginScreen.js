@@ -24,17 +24,15 @@ class LoginScreen extends Component {
     this.textInput = {
 
     }
+    this.post = this.post.bind(this)
   }
-  post = (form) => {
-    let result = checkValidation(this.textInput, this.focusTo)
+
+  post(form) {
+    let result = checkValidation(this.textInput)
     if (result.status && !this.props.login.fetching)
       this.props.post(form)
   }
 
-  focusTo = (name) => {
-    if (name)
-      this.textInput[name].focus()
-  }
   render() {
     const { setForm, login } = this.props
     return (
@@ -50,7 +48,7 @@ class LoginScreen extends Component {
           <Form style={{ justifyContent: 'space-around' }}>
             <TextInputWithLogo
               onSubmitEditing={() => {
-                this.focusTo('password')
+                this.post(login.form)
               }}
               iconColor='white'
               iconType='FontAwesome'
@@ -90,7 +88,6 @@ class LoginScreen extends Component {
                   : <Text style={{ color: 'white', fontWeight: 'bold' }}>Login</Text>
 
               }
-
             </Button>
           </Form>
         </Content>

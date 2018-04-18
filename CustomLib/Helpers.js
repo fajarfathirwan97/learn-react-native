@@ -17,7 +17,7 @@ export const validator = (type, input) => {
 }
 const required = (input) => {
   input = input.trim()
-  return input != ''
+  return input !== ''
 }
 
 const number = (input) => {
@@ -29,7 +29,7 @@ export const isTrue = (input) => {
   return input === true
 }
 
-export const checkValidation = (textInput, focusToCallback) => {
+export const checkValidation = (textInput) => {
   let validate = []
   let focus = ''
   let _textInput = textInput
@@ -40,7 +40,7 @@ export const checkValidation = (textInput, focusToCallback) => {
       focus = textInputKey
   }
   if (focus) {
-    focusToCallback(focus)    
+    _textInput[focus].focus()
   }
   return {
     status: validate.every(isTrue),

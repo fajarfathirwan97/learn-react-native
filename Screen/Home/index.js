@@ -1,10 +1,10 @@
-import { StackNavigator } from 'react-navigation'
+import { TabNavigator } from 'react-navigation'
 
 import { Colors } from 'themes'
 import HomeScreen from './HomeScreen'
 import Acordion from './Acordion'
 
-export default StackNavigator(
+export default TabNavigator(
   {
     Home: {
       screen: HomeScreen,

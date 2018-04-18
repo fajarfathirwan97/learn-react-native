@@ -13,9 +13,7 @@ export default class HomeScreen extends Component {
         <Content>
           <List>
             <ListItem>
-              <TouchableOpacity onPress={() => this.props.navigation.navigate('Acordion')} style={{ flex: 1 }}>
-                <Text>Acordion</Text>
-              </TouchableOpacity>
+              
             </ListItem>
           </List>
         </Content>

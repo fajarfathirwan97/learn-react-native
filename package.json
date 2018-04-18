@@ -20,6 +20,7 @@
     "react-native-fontawesome": "^5.7.0",
     "react-native-linear-gradient": "^2.4.0",
     "react-native-snap-carousel": "^3.6.0",
+    "react-native-sqlite-storage": "^3.3.4",
     "react-native-vector-icons": "^4.5.0",
     "react-navigation": "^1.0.0-beta.27",
     "react-redux": "^5.0.7",

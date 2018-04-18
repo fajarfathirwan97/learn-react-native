@@ -1,12 +1,11 @@
 import { StackNavigator } from 'react-navigation'
 
-import { Colors } from 'themes'
-import LoginScreen from './LoginScreen'
+import SplashScreen from './SplashScreen'
 
 export default StackNavigator(
   {
-    Login: {
-      screen: LoginScreen
+    SplashScreen: {
+      screen: SplashScreen
     }
   },
   {

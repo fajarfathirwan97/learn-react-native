@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { DrawerNavigator, NavigationActions } from 'react-navigation'
-import { Home, Login } from '../Screen/'
+// import { AsyncStorage } from 'react-native'
+import { Home, Login, SplashScreen } from '../Screen/'
 import redux from '../Redux'
 import { Provider } from 'react-redux'
 import { View } from 'native-base'
@@ -12,15 +13,23 @@ let Navigation = DrawerNavigator(
     Home: {
       screen: Home,
     },
+    SplashScreen: {
+      screen: SplashScreen,
+      navigationOptions: {
+        drawerLockMode: 'locked-closed',
+        drawerLabel: () => null
+      }
+    },
     Login: {
       screen: Login,
       navigationOptions: {
         drawerLockMode: 'locked-closed',
+        drawerLabel: () => null        
       }
     }
   },
   {
-    initialRouteName: 'Login',
+    initialRouteName: 'SplashScreen',
   }
 )
 
@@ -30,7 +39,6 @@ export default class index extends Component {
   }
   componentDidMount() {
     NavigatorHelper.setNavigator(this.nav)
-    // NavigatorHelper.navigate(NavigationActions.navigate({routeName:'Home'}))
   }
   render() {
     return (

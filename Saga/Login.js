@@ -1,8 +1,9 @@
 import { call, put } from 'redux-saga/effects'
-import { NavigationActions } from 'react-navigation'
+import { NavigationActions, } from 'react-navigation'
 import LoginActions from '../Redux/Login'
 import ToastActions from '../Redux/Toast'
 import *  as NavigatorHelper from '../CustomLib/NavigatorHelper'
+import * as AsyncStorage from '../CustomLib/AsyncStorage'
 
 // attempts to login
 export function* login(api, action) {
@@ -14,6 +15,7 @@ export function* login(api, action) {
       response = yield call(api.authLogin, form)
       if (response.ok) {
         yield put(LoginActions.success(response.data.data))
+        AsyncStorage.setItem('token', response.data.data.token)
         NavigatorHelper.navigate(NavigationActions.navigate({
           routeName: 'Home',
         }))

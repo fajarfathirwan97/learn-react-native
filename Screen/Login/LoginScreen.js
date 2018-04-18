@@ -13,7 +13,7 @@ import {
 import { NavigationActions } from 'react-navigation'
 import TextInputWithLogo from '../../Components/TextInputWithLogo'
 import LoginActions from '../../Redux/Login'
-import { isTrue } from '../../CustomLib/Helpers'
+import { isTrue, checkValidation } from '../../CustomLib/Helpers'
 import { trans } from '../../Lang'
 import { Colors } from '../../Themes'
 import * as NavigatorHelper from '../../CustomLib/NavigatorHelper'
@@ -25,34 +25,15 @@ class LoginScreen extends Component {
 
     }
   }
-  checkValidation() {
-    let validate = []
-    let focus = ''
-    let textInput = this.textInput
-    for (let textInputKey in textInput) {
-      let result = textInput[textInputKey].validate()
-      validate.push(result.error)
-      if (!result.error && result.message && !focus)
-        focus = textInputKey
-    }
-    if (focus)
-      this.focusTo(focus)
-    return {
-      status: validate.every(isTrue),
-    }
-  }
-  post(form) {
-    let checkValidation = this.checkValidation()
-    if (checkValidation.status && !this.props.login.fetching)
+  post = (form) => {
+    let result = checkValidation(this.textInput, this.focusTo)
+    if (result.status && !this.props.login.fetching)
       this.props.post(form)
   }
 
-  focusTo(name) {
-    this.textInput[name].focus()
-  }
-
-  componentDidMount() {
-    NavigatorHelper.navigate(NavigationActions.navigate({ routeName: 'Home' }))
+  focusTo = (name) => {
+    if (name)
+      this.textInput[name].focus()
   }
   render() {
     const { setForm, login } = this.props

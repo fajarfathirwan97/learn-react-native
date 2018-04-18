@@ -24,6 +24,25 @@ const number = (input) => {
   input = parseInt(input.trim() || 0)
   return !isNaN(input)
 }
+
 export const isTrue = (input) => {
-  return input == true
+  return input === true
+}
+
+export const checkValidation = (textInput, focusToCallback) => {
+  let validate = []
+  let focus = ''
+  let _textInput = textInput
+  for (let textInputKey in _textInput) {
+    let result = _textInput[textInputKey].validate()
+    validate.push(result.error)
+    if (!result.error && result.message && !focus)
+      focus = textInputKey
+  }
+  if (focus) {
+    focusToCallback(focus)    
+  }
+  return {
+    status: validate.every(isTrue),
+  }
 }

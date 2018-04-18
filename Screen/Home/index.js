@@ -1,4 +1,4 @@
-import { TabNavigator } from 'react-navigation'
+import { TabNavigator,StackNavigator } from 'react-navigation'
 
 import { Colors } from 'themes'
 import HomeScreen from './HomeScreen'

@@ -37,7 +37,7 @@ export default class index extends Component {
   constructor(props) {
     super(props)
   }
-  componentDidMount() {
+  componentDidMount(){
     NavigatorHelper.setNavigator(this.nav)
   }
   render() {

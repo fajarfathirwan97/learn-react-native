@@ -11,7 +11,7 @@ import { getToken } from '../../CustomLib/AsyncStorage'
 export default class HomeScreen extends Component {
   componentDidMount() {
     setTimeout(() => {
-      this.checkAsyncStorage()      
+      this.checkAsyncStorage()
     }, 1000);
   }
   async checkAsyncStorage() {

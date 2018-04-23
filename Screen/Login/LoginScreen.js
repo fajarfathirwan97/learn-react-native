@@ -10,14 +10,11 @@ import {
   Form,
   Button
 } from 'native-base'
-import { NavigationActions } from 'react-navigation'
 import TextInputWithLogo from '../../Components/TextInputWithLogo'
 import LoginActions from '../../Redux/Login'
 import { isTrue, checkValidation } from '../../CustomLib/Helpers'
 import { trans } from '../../Lang'
 import { Colors } from '../../Themes'
-import * as NavigatorHelper from '../../CustomLib/NavigatorHelper'
-
 class LoginScreen extends Component {
   constructor(props) {
     super(props)
@@ -26,7 +23,6 @@ class LoginScreen extends Component {
     }
     this.post = this.post.bind(this)
   }
-
   post(form) {
     let result = checkValidation(this.textInput)
     if (result.status && !this.props.login.fetching)

@@ -7,12 +7,24 @@ import {
 import { Container, List, ListItem, Content } from 'native-base'
 import * as NavigatorHelper from '../../CustomLib/NavigatorHelper'
 import { getToken } from '../../CustomLib/AsyncStorage'
-
+import sqlite from '../../Config/connection';
 export default class HomeScreen extends Component {
   componentDidMount() {
     setTimeout(() => {
       this.checkAsyncStorage()
-    }, 1000);
+    }, 1000)
+    this.populateDb()
+  }
+  async populateDb() {
+    db = new sqlite()
+    // await db.populateDb()
+    // await db.populateSeed()
+    result = await db.setTable('AssetMaster')
+      .select([
+        'Description',
+        'AssetTypeId',
+        'AssetCode',
+      ]).get()
   }
   async checkAsyncStorage() {
     token = await getToken()
@@ -21,6 +33,7 @@ export default class HomeScreen extends Component {
     else
       NavigatorHelper.navigate(NavigationActions.navigate({ routeName: 'Login' }))
   }
+
   render() {
     return (
       <Container>

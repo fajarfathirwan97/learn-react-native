@@ -8,7 +8,8 @@ import { Container, List, ListItem, Content } from 'native-base'
 import * as NavigatorHelper from '../../CustomLib/NavigatorHelper'
 import { getToken } from '../../CustomLib/AsyncStorage'
 import sqlite from '../../Config/connection';
-export default class HomeScreen extends Component {
+import Home from "../Home";
+export default class SplashScreen extends Component {
   componentDidMount() {
     setTimeout(() => {
       this.checkAsyncStorage()
@@ -19,19 +20,31 @@ export default class HomeScreen extends Component {
     db = new sqlite()
     // await db.populateDb()
     // await db.populateSeed()
-    result = await db.setTable('AssetMaster')
-      .select([
-        'Description',
-        'AssetTypeId',
-        'AssetCode',
-      ]).get()
+    // result = await db.setTable('AssetMaster')
+    //   .select([
+    //     'Description',
+    //     'AssetTypeId',
+    //     'AssetCode',
+    //   ]).get()
   }
   async checkAsyncStorage() {
     token = await getToken()
-    if (token)
-      NavigatorHelper.navigate(NavigationActions.navigate({ routeName: 'Home' }))
-    else
-      NavigatorHelper.navigate(NavigationActions.navigate({ routeName: 'Login' }))
+    if (token) {
+      NavigatorHelper.reset(NavigationActions.reset({
+        index: 0,
+        actions: [
+          NavigationActions.navigate({ routeName: 'Home' })
+        ]
+      }))
+    }
+    else {
+      NavigatorHelper.reset(NavigationActions.reset({
+        index: 0,
+        actions: [
+          NavigationActions.navigate({ routeName: 'Login' })
+        ]
+      }))
+    }
   }
 
   render() {

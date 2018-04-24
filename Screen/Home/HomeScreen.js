@@ -13,7 +13,9 @@ export default class HomeScreen extends Component {
         <Content>
           <List>
             <ListItem>
-              
+              <TouchableOpacity style={{ flex: 1 }}>
+                <Text>DB LOCAL</Text>
+              </TouchableOpacity>
             </ListItem>
           </List>
         </Content>
